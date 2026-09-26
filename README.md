@@ -1,5 +1,7 @@
 # Switchyard
 
+[![CI](https://github.com/SumitPokhriyal5/switchyard/actions/workflows/ci.yml/badge.svg)](https://github.com/SumitPokhriyal5/switchyard/actions/workflows/ci.yml)
+
 A browser puzzle game about routing trains. Flip the switches so every train reaches the station
 that matches its color and symbol. Scores are verified on the server by replaying the player's
 inputs through the same game engine the browser uses.
