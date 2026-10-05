@@ -298,3 +298,33 @@ export function routeToNode(layout: Layout, nodeId: number): SwitchSetting[] {
 export function routeToStation(layout: Layout, lineId: LineId): SwitchSetting[] {
   return routeToNode(layout, getStationNode(layout, lineId).id);
 }
+
+/**
+ * Draws the layout as text, for tests and debugging.
+ * T = tunnel, 1-9 = switch keys, A-J = stations of lines 0-9 (A = red, B = blue, ...),
+ * # = plain track, . = empty.
+ */
+export function layoutToAscii(layout: Layout): string {
+  const lines: string[][] = Array.from({ length: layout.rows * 2 - 1 }, () =>
+    new Array<string>(layout.cols * 2 - 1).fill(' '),
+  );
+  for (let y = 0; y < layout.rows; y++) {
+    for (let x = 0; x < layout.cols; x++) (lines[y * 2] as string[])[x * 2] = '.';
+  }
+  for (const node of layout.nodes) {
+    const symbol =
+      node.kind === 'tunnel'
+        ? 'T'
+        : node.kind === 'switch'
+          ? String((node.switchId ?? 0) + 1)
+          : node.kind === 'station'
+            ? String.fromCharCode(65 + (node.lineId ?? 0))
+            : '#';
+    (lines[node.y * 2] as string[])[node.x * 2] = symbol;
+    if (node.parent !== null) {
+      const p = getNode(layout, node.parent);
+      (lines[node.y + p.y] as string[])[node.x + p.x] = p.y === node.y ? '-' : '|';
+    }
+  }
+  return lines.map((line) => line.join('').trimEnd()).join('\n');
+}
