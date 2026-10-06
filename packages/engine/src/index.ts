@@ -2,6 +2,7 @@
 
 export * from './constants.js';
 export * from './generator.js';
+export * from './geometry.js';
 export * from './grid.js';
 export * from './layout.js';
 export * from './levels.js';
