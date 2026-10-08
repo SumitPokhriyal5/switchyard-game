@@ -8,4 +8,5 @@ export * from './layout.js';
 export * from './levels.js';
 export * from './lines.js';
 export * from './rng.js';
+export * from './simulation.js';
 export * from './tree.js';
